@@ -41,6 +41,7 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
+import android.widget.Button;
 import android.widget.Toast;
 
 import com.android.camera.gallery.IImage;
@@ -113,6 +114,8 @@ public class CropImage extends MonitoredActivity {
 
         Intent intent = getIntent();
         Bundle extras = intent.getExtras();
+        String buttonTextSave = null;
+        String buttonTextDiscard = null;
 
         if (extras != null) {
             if (extras.getBoolean("circleCrop", false)) {
@@ -144,6 +147,8 @@ public class CropImage extends MonitoredActivity {
             mDoFaceDetection = extras.containsKey("noFaceDetection")
                     ? !extras.getBoolean("noFaceDetection")
                     : true;
+            buttonTextSave = extras.getString("buttonTextSave");
+            buttonTextDiscard = extras.getString("buttonTextDiscard");
         }
 
         if (mBitmap == null) {
@@ -168,20 +173,32 @@ public class CropImage extends MonitoredActivity {
         // Make UI fullscreen.
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN);
 
-        findViewById(R.id.discard).setOnClickListener(
-                new View.OnClickListener() {
-                    public void onClick(View v) {
-                        setResult(RESULT_CANCELED);
-                        finish();
-                    }
-                });
+        Button buttonDiscard = (Button)findViewById(R.id.discard);
+        buttonDiscard.setOnClickListener(
+            new View.OnClickListener() {
+                public void onClick(View v) {
+                    setResult(RESULT_CANCELED);
+                    finish();
+                }
+            });
+        if (buttonTextDiscard != null)
+        {
+            buttonDiscard.setText(buttonTextDiscard);
+        }
 
-        findViewById(R.id.save).setOnClickListener(
-                new View.OnClickListener() {
-                    public void onClick(View v) {
-                        onSaveClicked();
-                    }
-                });
+        Button buttonSave = (Button)findViewById(R.id.save);
+        buttonSave.setOnClickListener(
+            new View.OnClickListener()
+            {
+                public void onClick(View v)
+                {
+                    onSaveClicked();
+                }
+            });
+        if (buttonTextSave != null)
+        {
+            buttonSave.setText(buttonTextSave);
+        }
 
         startFaceDetection();
     }

@@ -50,6 +50,8 @@ public class CropImageIntentBuilder {
     private static final String EXTRA_OUTPUT_QUALITY = "outputQuality";
     private static final String EXTRA_OUTLINE_COLOR = "outlineColor";
     private static final String EXTRA_OUTLINE_CIRCLE_COLOR = "outlineCircleColor";
+    private static final String EXTRA_BUTTON_TEXT_SAVE = "buttonTextSave";
+    private static final String EXTRA_BUTTON_TEXT_DISCARD = "buttonTextDiscard";
 
     private static final int DEFAULT_SCALE = 1;
 
@@ -63,6 +65,8 @@ public class CropImageIntentBuilder {
     private Bitmap bitmap;
     private int outlineColor = HighlightView.DEFAULT_OUTLINE_COLOR;
     private int outlineCircleColor = HighlightView.DEFAULT_OUTLINE_CIRCLE_COLOR;
+    private String buttonTextSave = null;
+    private String buttonTextDiscard = null;
 
     private final int aspectX;
     private final int aspectY;
@@ -142,6 +146,8 @@ public class CropImageIntentBuilder {
         intent.putExtra(EXTRA_OUTPUT_QUALITY, this.outputQuality);
         intent.putExtra(EXTRA_OUTLINE_COLOR, this.outlineColor);
         intent.putExtra(EXTRA_OUTLINE_CIRCLE_COLOR, this.outlineCircleColor);
+        intent.putExtra(EXTRA_BUTTON_TEXT_SAVE, this.buttonTextSave);
+        intent.putExtra(EXTRA_BUTTON_TEXT_DISCARD, this.buttonTextDiscard);
 
         if (this.bitmap != null) {
             intent.putExtra(EXTRA_BITMAP_DATA, this.bitmap);
@@ -290,6 +296,32 @@ public class CropImageIntentBuilder {
      */
     public CropImageIntentBuilder setOutlineCircleColor(int color) {
         this.outlineCircleColor = color;
+
+        return this;
+    }
+
+    /**
+     * Set the localized/customized text for the save button.
+     *
+     * @param text The button text to use.
+     * @return This Builder object to allow for chaining of calls to set methods.
+     * @since 1.1.2
+     */
+    public CropImageIntentBuilder setButtonTextSave(String text) {
+        this.buttonTextSave = text;
+
+        return this;
+    }
+
+    /**
+     * Set the localized/customized text for the discard button.
+     *
+     * @param text The button text to use.
+     * @return This Builder object to allow for chaining of calls to set methods.
+     * @since 1.1.2
+     */
+    public CropImageIntentBuilder setButtonTextDiscard(String text) {
+        this.buttonTextDiscard = text;
 
         return this;
     }
